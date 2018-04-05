@@ -45,5 +45,4 @@ class Track {
     self.previewURL = previewURL
     self.index = index
   }
-  
 }
