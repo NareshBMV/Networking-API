@@ -1,0 +1,22 @@
+[
+  {
+    "gender" : "Male",
+    "grade" : "std",
+    "name" : "Bharath",
+    "subjects" : [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "gender" : "Male",
+    "grade" : "std",
+    "name" : "Bharath",
+    "subjects" : [
+      "1",
+      "2",
+      "3"
+    ]
+  }
+]

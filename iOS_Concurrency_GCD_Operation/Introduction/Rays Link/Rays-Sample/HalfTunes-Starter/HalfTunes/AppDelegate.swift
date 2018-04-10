@@ -19,7 +19,7 @@
  * merger, publication, distribution, sublicensing, creation of derivative works,
  * or sale is expressly withheld.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXP00RESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -56,6 +56,10 @@
     print("Background Session identifier \(identifier)")
     backgroundSessionCompletionHandler = completionHandler
   }
-
+  
+  func applicationWillResignActive(_ application: UIApplication) {
+    //Handle activity in inactive state, saving data, pause
+    print("Application did enter inactive state")
+  }
 }
  
