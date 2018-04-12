@@ -29,7 +29,7 @@ class WhateverViewController: UIViewController {
   var current = NSDecimalNumber.one
   var position: UInt = 1
   var updateTimer: Timer?
-  
+  var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
   
   @IBOutlet var resultsLabel: UILabel!
   
@@ -48,7 +48,9 @@ class WhateverViewController: UIViewController {
   }
   
   func calculateNextNumber() {
-    let result = current.adding(previous)
+    let result = current.adding(previous
+    
+    )
     
     let bigNumber = NSDecimalNumber(mantissa: 1, exponent: 40, isNegative: false)
     if result.compare(bigNumber) == .orderedAscending {
@@ -61,8 +63,16 @@ class WhateverViewController: UIViewController {
     }
     
     let resultsMessage = "Position \(position) = \(current)"
-    resultsLabel.text = resultsMessage
     
+    switch UIApplication.shared.applicationState {
+    case .active:
+      resultsLabel.text = resultsMessage
+    case .background:
+      print("App is backgrounded. Next number = \(resultsMessage)")
+      print("Background time remaining = \(UIApplication.shared.backgroundTimeRemaining) seconds")
+    case .inactive:
+      break
+    }
   }
  
   func resetCalculation() {
@@ -71,5 +81,16 @@ class WhateverViewController: UIViewController {
     position = 1
   }
   
+  func registerBackgroundTask() {
+    backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+      self?.endBackgroundTask()
+    }
+    assert(backgroundTask != UIBackgroundTaskInvalid)
+  }
   
+  func endBackgroundTask() {
+    print("Background task ended.")
+    UIApplication.shared.endBackgroundTask(backgroundTask)
+    backgroundTask = UIBackgroundTaskInvalid
+  }
 }

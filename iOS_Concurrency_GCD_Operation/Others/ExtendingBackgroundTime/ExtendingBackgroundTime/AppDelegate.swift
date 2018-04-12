@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        print("Application Did Enter Background : \(UIApplication.shared.backgroundTimeRemaining)")
         print("Entered Background Task")
         doBackgroundTask()
     }
@@ -27,10 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func doBackgroundTask() {
         self.beginBackgroundDownload()
         let queue = DispatchQueue.global(qos: .background)
+        print("Begin Background Download : \(UIApplication.shared.backgroundTimeRemaining)")
+
         queue.async {
             print("Calling background Async")
             print("Sleeping.........!")
-            sleep(16)
+            sleep(2)
             print("End Sleeping.....!")
             self.endBackgroundDownload()
         }
@@ -38,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func beginBackgroundDownload() {
         print("Inside Begin background Task")
+
         backgroundUpdateTask = UIApplication.shared.beginBackgroundTask(withName: "DownloadImages", expirationHandler: {
             print("Once background update is done")
             self.endBackgroundDownload()
@@ -46,6 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func endBackgroundDownload() {
         print("Ending Background Task")
+        DispatchQueue.main.async {
+            print("Begin Background Download : \(UIApplication.shared.backgroundTimeRemaining)")
+        }
+
         UIApplication.shared.endBackgroundTask(backgroundUpdateTask)
         backgroundUpdateTask = UIBackgroundTaskInvalid
     }
