@@ -23,7 +23,7 @@
 
 import UIKit
 import AVFoundation
-
+import Foundation
 class AudioViewController: UIViewController {
   
   @IBOutlet var songLabel: UILabel!
@@ -40,6 +40,35 @@ class AudioViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    //Interactive, Initiated, Utility, Background, Default, Unspecified
+    //QOS is immutable for GCD dispatch queue and blocks but where in it is mutable for Operations
+    //Testing Disipatch Block with QOS Class
+    let interactiveBlock = DispatchWorkItem(qos: .userInteractive, flags: DispatchWorkItemFlags(rawValue: 0)) {
+      for _ in 1...10 {
+        print("Interactive Block")
+      }
+    }
+    
+    //Specifically to execute function in separate thread
+    let thread = Thread(target:self, selector:#selector(doSomething), object:nil)
+    thread.start()
+    
+    let initiatedBlock = DispatchWorkItem(qos: .userInitiated, flags: DispatchWorkItemFlags(rawValue: 0)) {
+      for _ in 1...10 {
+        print("Initiated Block")
+      }
+    }
+    DispatchQueue.global().async(execute: initiatedBlock)
+    DispatchQueue.global().async(execute: interactiveBlock)
+
+    DispatchQueue.global(qos: .userInteractive).async{
+      
+      DispatchQueue.main.async{
+        
+      }
+      
+    }
     
     do {
       try AVAudioSession.sharedInstance().setCategory(
@@ -60,6 +89,10 @@ class AudioViewController: UIViewController {
         print("Background: \(timeString)")
       }
     }
+  }
+  
+  func doSomething()  {
+    print("Inside Do Something")
   }
   
   private func makePlayer() -> AVQueuePlayer {

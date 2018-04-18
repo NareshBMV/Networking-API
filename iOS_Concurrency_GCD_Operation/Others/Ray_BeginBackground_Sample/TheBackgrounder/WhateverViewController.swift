@@ -33,26 +33,43 @@ class WhateverViewController: UIViewController {
   
   @IBOutlet var resultsLabel: UILabel!
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    NotificationCenter.default.addObserver(self, selector: #selector(reinstateBackgroundTask), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+  }
+  
   @IBAction func didTapPlayPause(_ sender: UIButton) {
     sender.isSelected = !sender.isSelected
     if sender.isSelected {
       resetCalculation()
       updateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self,
                                          selector: #selector(calculateNextNumber), userInfo: nil, repeats: true)
-      // register background task
+      registerBackgroundTask()
     } else {
       updateTimer?.invalidate()
       updateTimer = nil
-      // end background task
+      if backgroundTask != UIBackgroundTaskInvalid {
+        endBackgroundTask()
+      }
     }
   }
   
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  func reinstateBackgroundTask() {
+    if updateTimer != nil && (backgroundTask == UIBackgroundTaskInvalid) {
+      registerBackgroundTask()
+    }
+  }
+
   func calculateNextNumber() {
     let result = current.adding(previous
     
     )
-    
-    let bigNumber = NSDecimalNumber(mantissa: 1, exponent: 40, isNegative: false)
+
+    let bigNumber = NSDecimalNumber(mantissa: 1, exponent: 25, isNegative: false)
     if result.compare(bigNumber) == .orderedAscending {
       previous = current
       current = result
@@ -81,6 +98,7 @@ class WhateverViewController: UIViewController {
     position = 1
   }
   
+  //Requesting additional background procession time
   func registerBackgroundTask() {
     backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
       self?.endBackgroundTask()

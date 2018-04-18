@@ -32,8 +32,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     
+    //Code For Background Fetch API
+    UIApplication.shared.setMinimumBackgroundFetchInterval(10)
     
     return true
   }
   
+  // Support for background fetch//Fetch depends on app usage and is handled by system//It uses usage pattern
+  func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    if let tabBarController = window?.rootViewController as? UITabBarController,
+      let viewControllers = tabBarController.viewControllers
+    {
+      for viewController in viewControllers {
+        if let fetchViewController = viewController as? FetchViewController {
+          fetchViewController.fetch {
+            fetchViewController.updateUI()
+            completionHandler(.newData)
+          }
+        }
+      }
+    }
+  }
 }

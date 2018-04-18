@@ -18,7 +18,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
-
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("Application Entering Inactive State")
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("Application Will Enter Foreground")
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("Application Did Become Active")
+    }
+    
+    
+//    CPU Usage exception and message
+//    Exception Type: EXC_RESOURCE
+//    Exception Subtype: CPU_FATAL
+//    Exception Message: (Limit 80%) Observed 89% over 60 seconds
+//    Also provides stack trace where cpu time is more and we can modify accordingly
     func applicationDidEnterBackground(_ application: UIApplication) {
         print("Application Did Enter Background : \(UIApplication.shared.backgroundTimeRemaining)")
         print("Entered Background Task")
