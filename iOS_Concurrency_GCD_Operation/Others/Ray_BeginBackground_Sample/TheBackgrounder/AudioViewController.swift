@@ -70,9 +70,7 @@ class AudioViewController: UIViewController {
     DispatchQueue.global().async(execute: interactiveBlock)
 
     
-    
-    
-    do {
+   do {
       try AVAudioSession.sharedInstance().setCategory(
         AVAudioSessionCategoryPlayAndRecord,
         with: .defaultToSpeaker)
