@@ -59,16 +59,18 @@ class AudioViewController: UIViewController {
         print("Initiated Block")
       }
     }
+    
+    DispatchQueue.global(qos: .background).async {
+      for _ in 1...10 {
+        print("Background Block")
+      }
+    }
+
     DispatchQueue.global().async(execute: initiatedBlock)
     DispatchQueue.global().async(execute: interactiveBlock)
 
-    DispatchQueue.global(qos: .userInteractive).async{
-      
-      DispatchQueue.main.async{
-        
-      }
-      
-    }
+    
+    
     
     do {
       try AVAudioSession.sharedInstance().setCategory(
@@ -105,7 +107,7 @@ class AudioViewController: UIViewController {
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "currentItem", let player = object as? AVPlayer,
       let currentItem = player.currentItem?.asset as? AVURLAsset {
-      songLabel.text = currentItem.url.lastPathComponent
+      songLabel.text = currentItem.url.lastPathComponent 
     }
   }
   

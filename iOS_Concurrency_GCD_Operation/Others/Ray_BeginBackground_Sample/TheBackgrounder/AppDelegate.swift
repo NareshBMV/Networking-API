@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     
     //Code For Background Fetch API
-    UIApplication.shared.setMinimumBackgroundFetchInterval(10)
+    UIApplication.shared.setMinimumBackgroundFetchInterval(5)
     
     return true
   }

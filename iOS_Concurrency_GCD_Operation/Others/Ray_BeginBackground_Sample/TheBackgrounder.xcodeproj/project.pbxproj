@@ -34,6 +34,7 @@
 		5DAC2CD91A3801D20081725C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		5DAC2CEF1A3802590081725C /* WhateverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhateverViewController.swift; sourceTree = "<group>"; };
 		5DAC2CF11A3802AA0081725C /* FetchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchViewController.swift; sourceTree = "<group>"; };
+		6466064B208871D700E6FA9C /* TheBackgrounder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBackgrounder.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +70,7 @@
 		5DAC2CCA1A3801D10081725C /* TheBackgrounder */ = {
 			isa = PBXGroup;
 			children = (
+				6466064B208871D700E6FA9C /* TheBackgrounder.entitlements */,
 				5DAC2CCD1A3801D10081725C /* AppDelegate.swift */,
 				5DAC2CCF1A3801D10081725C /* AudioViewController.swift */,
 				5DAC2CD11A3801D10081725C /* LocationViewController.swift */,
@@ -141,6 +143,9 @@
 								enabled = 1;
 							};
 							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
 								enabled = 0;
 							};
 						};
