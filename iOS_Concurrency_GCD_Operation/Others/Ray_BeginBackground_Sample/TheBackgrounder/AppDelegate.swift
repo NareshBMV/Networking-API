@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //Code For Background Fetch API
     UIApplication.shared.setMinimumBackgroundFetchInterval(5)
-    
     return true
   }
   
