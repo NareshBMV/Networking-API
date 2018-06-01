@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import PlaygroundSupport
+
 PlaygroundPage.current.needsIndefiniteExecution = true
 //: # Tilt-Shift
 //: In the demo you discovered how you can use queues to dispatch work onto GCD queues asynchronously, and one of the top uses cases of this is to turn synchronous functions into asynchrnonous ones.
@@ -10,24 +11,31 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 print("=== Starting Sync ===")
 let image = UIImage(named: "dark_road_small.jpg")
 duration {
-  let result = tiltShift(image: image)
+    _ = tiltShift(image: image)
 }
 //: The async function should perform the task on `workerQueue`, which should be an argument.
 let workerQueue = DispatchQueue(label: "com.raywenderlich.worker")
+
 //: And return the result on `resultQueue`, which should also be an argument.
 //: Note that in an app, `resultQueue` would normally be the main queue.
 let resultQueue = DispatchQueue.global()
-print("=== Starting Async ===")
 //: __TODO__: Implement `asyncTiltShift` function here:
-
-
-
-
+func asyncTiltShift(currentQueue:DispatchQueue, resultQueue:DispatchQueue, image:UIImage?,completion: @escaping((UIImage?)->())) {
+    currentQueue.async {
+        let finalImage = tiltShift(image: image)
+        resultQueue.async {
+            completion(finalImage)
+        }
+    }
+}
 
 
 
 //: __TODO__: Use `asyncTiltShift` to filter dark_road_small.jpg. Remember to call `PlaygroundPage.current.finishExecution()` in the completion handler.
-
+asyncTiltShift(currentQueue: workerQueue, resultQueue: resultQueue, image: image) { (originalImage) in
+    originalImage
+    PlaygroundPage.current.finishExecution()
+}
 
 
 
